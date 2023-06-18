@@ -1,0 +1,4 @@
+hbutils>=0.9.0
+huggingface_hub>=0.14.0
+tensorboard
+click>=7.0.0
