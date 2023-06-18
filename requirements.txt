@@ -2,3 +2,6 @@ hbutils>=0.9.0
 huggingface_hub>=0.14.0
 tensorboard
 click>=7.0.0
+typing_extensions; python_version < '3.10'
+emoji
+di-toolkit
