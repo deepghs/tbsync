@@ -32,7 +32,7 @@ def upload_log_directory(repository: str, logdir, name: Optional[str] = None, an
         final_name = f'events.out.tfevents.{timestamp}.{machine}.{extra}'
         file_in_repo = f'runs/{name}/{final_name}'
         uploads.append(CommitOperationAdd(file_in_repo, logfile))
-        logging.info(f'Scanned {logfile!r} --> {final_name!r}')
+        logging.info(f'Scanned {logfile!r} --> {file_in_repo!r}')
 
     logging.info('Uploading log files ...')
     current_time = datetime.datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')
