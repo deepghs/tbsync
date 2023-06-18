@@ -3,3 +3,4 @@ include MANIFEST.in
 include requirements.txt
 include requirements-*.txt
 recursive-include tbsync *.json *.yml *.yaml
+recursive-include tbsync/template *
