@@ -159,7 +159,8 @@ def init_tb_space(repository: str, title: Optional[str] = None, emoji: Optional[
             for file in files:
                 absfile = os.path.join(root, file)
                 relfile = os.path.relpath(absfile, td)
-                uploads.append(CommitOperationAdd(relfile, absfile))
+                file_in_repo = '/'.join(relfile.split(os.sep))
+                uploads.append(CommitOperationAdd(file_in_repo, absfile))
 
         logging.info('Uploading files ...')
         current_time = datetime.datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')
