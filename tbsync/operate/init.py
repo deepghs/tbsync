@@ -4,6 +4,7 @@ import pathlib
 import platform
 import random
 import re
+from typing import Optional
 
 import emoji as emoji_
 from ditk import logging
@@ -15,7 +16,7 @@ from huggingface_hub import CommitOperationAdd
 from ..client import get_huggingface_client
 
 try:
-    from typing import Literal, Optional
+    from typing import Literal
 except (ImportError, ModuleNotFoundError):
     from typing_extensions import Literal
 
@@ -127,11 +128,11 @@ def init_tb_space_to_local(repository: str, output_dir: str,
 
     os.makedirs(output_dir, exist_ok=True)
     for file, local_file in TEMPLATE_FILES:
-        with open(local_file, 'r') as if_:
+        with open(local_file, 'r', encoding='utf-8') as if_:
             text = if_.read()
             env = {**os.environ, **{f'tbsync_{key}': value for key, value in args.items()}}
 
-            with open(os.path.join(output_dir, file), 'w') as of_:
+            with open(os.path.join(output_dir, file), 'w', encoding='utf-8') as of_:
                 of_.write(env_template(text, env))
 
     runs_dir = os.path.join(output_dir, 'runs')
