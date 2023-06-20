@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tbsync.operate.upload &mdash; tbsync 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tbsync
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/quick_start/index.html">Quick Start</a></li>
+</ul>
+<p><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_doc/config/index.html">tbsync.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_doc/operate/index.html">tbsync.operate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_doc/utils/index.html">tbsync.utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tbsync</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tbsync.operate.upload</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+    
+    
+  <h1>Source code for tbsync.operate.upload</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">ditk</span> <span class="kn">import</span> <span class="n">logging</span>
+<span class="kn">from</span> <span class="nn">hbutils.encoding</span> <span class="kn">import</span> <span class="n">sha3</span>
+<span class="kn">from</span> <span class="nn">huggingface_hub</span> <span class="kn">import</span> <span class="n">CommitOperationAdd</span>
+
+<span class="kn">from</span> <span class="nn">..client</span> <span class="kn">import</span> <span class="n">get_huggingface_client</span>
+
+<span class="n">_LOG_FILE_GLOB</span> <span class="o">=</span> <span class="s1">&#39;events.out.tfevents.*&#39;</span>
+<span class="n">_LOG_FILE_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^events\.out\.tfevents\.(?P&lt;timestamp&gt;\d+)\.(?P&lt;machine&gt;[^.]+)\.(?P&lt;extra&gt;[\s\S]+)$&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="upload_log_directory"><a class="viewcode-back" href="../../../api_doc/operate/upload.html#tbsync.operate.upload.upload_log_directory">[docs]</a><span class="k">def</span> <span class="nf">upload_log_directory</span><span class="p">(</span><span class="n">repository</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">logdir</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">anonymous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Overview:</span>
+<span class="sd">        Uploads a local TensorBoard log directory to the specified Hugging Face space repository</span>
+<span class="sd">        for easy access and viewing.</span>
+
+<span class="sd">    :param repository: The Hugging Face space repository to upload the log directory to.</span>
+<span class="sd">    :param logdir: The path to the local TensorBoard log directory.</span>
+<span class="sd">    :param name: The name for the uploaded log directory. Defaults to ``None``,</span>
+<span class="sd">        which means directory name of ``logdir`` will be used as name.</span>
+<span class="sd">    :param anonymous: Indicates whether the upload should be anonymous or not. Defaults to ``False``.</span>
+<span class="sd">        When this option is enabled, the part of the log file name that contains information about</span>
+<span class="sd">        the local machine will be encrypted, ensuring that the local runtime environment information is not exposed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">logdir</span><span class="p">))</span>
+
+    <span class="n">hf</span> <span class="o">=</span> <span class="n">get_huggingface_client</span><span class="p">()</span>
+    <span class="n">uploads</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">logfile</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logdir</span><span class="p">,</span> <span class="n">_LOG_FILE_GLOB</span><span class="p">)):</span>
+        <span class="n">matching</span> <span class="o">=</span> <span class="n">_LOG_FILE_PATTERN</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">logfile</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="n">matching</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Log file </span><span class="si">{</span><span class="n">logfile</span><span class="si">!r}</span><span class="se">\&#39;</span><span class="s1">s name not match with pattern </span><span class="si">{</span><span class="n">_LOG_FILE_PATTERN</span><span class="o">.</span><span class="n">pattern</span><span class="si">}</span><span class="s1">.&#39;</span>
+
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">matching</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span>
+        <span class="n">machine</span> <span class="o">=</span> <span class="n">matching</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;machine&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">anonymous</span><span class="p">:</span>
+            <span class="n">machine</span> <span class="o">=</span> <span class="n">sha3</span><span class="p">(</span><span class="n">machine</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">n</span><span class="o">=</span><span class="mi">224</span><span class="p">)</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="n">matching</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;extra&#39;</span><span class="p">)</span>
+
+        <span class="n">final_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;events.out.tfevents.</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">machine</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">extra</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">file_in_repo</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;runs/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">final_name</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">uploads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CommitOperationAdd</span><span class="p">(</span><span class="n">file_in_repo</span><span class="p">,</span> <span class="n">logfile</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Scanned </span><span class="si">{</span><span class="n">logfile</span><span class="si">!r}</span><span class="s1"> --&gt; </span><span class="si">{</span><span class="n">file_in_repo</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Uploading log files ...&#39;</span><span class="p">)</span>
+    <span class="n">current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">astimezone</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S %Z&#39;</span><span class="p">)</span>
+    <span class="n">hf</span><span class="o">.</span><span class="n">create_commit</span><span class="p">(</span>
+        <span class="n">repo_id</span><span class="o">=</span><span class="n">repository</span><span class="p">,</span> <span class="n">repo_type</span><span class="o">=</span><span class="s1">&#39;space&#39;</span><span class="p">,</span>
+        <span class="n">operations</span><span class="o">=</span><span class="n">uploads</span><span class="p">,</span>
+        <span class="n">commit_message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Upload tensorboard log </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s1"> via tbsync, on </span><span class="si">{</span><span class="n">current_time</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2023, narugo1992
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+    <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: v0.0.1
+    <span class="fa fa-caret-down"></span>
+  </span>
+        <div class="rst-other-versions">
+                <dl>
+                    <dt>Tags</dt>
+                        <dd><a href="upload.html">v0.0.1</a></dd>
+                </dl>
+                <dl>
+                    <dt>Branches</dt>
+                        <dd><a href="../../../../main/index.html">main</a></dd>
+                </dl>
+        </div>
+    </div>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
