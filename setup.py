@@ -50,7 +50,7 @@ setup(
     author=meta['__AUTHOR__'],
     author_email=meta['__AUTHOR_EMAIL__'],
     license='Apache License, Version 2.0',
-    keywords='Utilities of images.',
+    keywords='python, tensorboard, huggingface',
     url='https://github.com/deepghs/tbsync',
 
     # environment
@@ -72,7 +72,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'tbsync=tbsync.__main__:cli'
+            'tbsync=tbsync.entry:cli'
         ]
     },
 )
