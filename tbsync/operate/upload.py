@@ -15,6 +15,19 @@ _LOG_FILE_PATTERN = re.compile(r'^events\.out\.tfevents\.(?P<timestamp>\d+)\.(?P
 
 
 def upload_log_directory(repository: str, logdir, name: Optional[str] = None, anonymous: bool = False):
+    """
+    Overview:
+        Uploads a local TensorBoard log directory to the specified Hugging Face space repository
+        for easy access and viewing.
+
+    :param repository: The Hugging Face space repository to upload the log directory to.
+    :param logdir: The path to the local TensorBoard log directory.
+    :param name: The name for the uploaded log directory. Defaults to ``None``,
+        which means directory name of ``logdir`` will be used as name.
+    :param anonymous: Indicates whether the upload should be anonymous or not. Defaults to ``False``.
+        When this option is enabled, the part of the log file name that contains information about
+        the local machine will be encrypted, ensuring that the local runtime environment information is not exposed.
+    """
     name = name or os.path.basename(os.path.abspath(logdir))
 
     hf = get_huggingface_client()

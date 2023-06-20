@@ -106,6 +106,27 @@ def init_tb_space_to_local(repository: str, output_dir: str,
                            licence: str = "mit", port: int = 6006,
                            python_version: Optional[str] = None, tensorboard_version: Optional[str] = None,
                            from_color: Optional[ColorTyping] = None, to_color: Optional[ColorTyping] = None):
+    """
+    Overview:
+        Creating a project to launch TensorBoard in the HuggingFace space locally
+
+    :param repository: The Hugging Face space repository to initialize.
+    :param output_dir: The directory to save the TensorBoard logs and files.
+    :param title: The title of the TensorBoard space. Defaults to ``None``,
+        which means capitalized form of repository's name will be used.
+    :param emoji: The emoji for the TensorBoard space. Defaults to ``None``,
+        which means random emoji logo will be used.
+    :param licence: The license for the TensorBoard space. Defaults to ``mit``.
+    :param port: The port number to run the TensorBoard server. Defaults to ``6006``.
+    :param python_version: The Python version used for the environment. Defaults to ``None``,
+        which means current python version will be used.
+    :param tensorboard_version: The version of TensorBoard to use. Defaults to ``None``,
+        which means no limitation for tensorboard's version.
+    :param from_color: The starting color of the space. Defaults to ``None``,
+        which means random starting color will be used.
+    :param to_color: The ending color of the space. Defaults to ``None``,
+        which means random ending color will be used.
+    """
     logging.info(f'Creating repository config file at {output_dir!r} ...')
 
     words = re.split(r'[\W_]+', repository.split('/')[-1])
@@ -144,6 +165,27 @@ def init_tb_space(repository: str, title: Optional[str] = None, emoji: Optional[
                   private: bool = False, licence: str = "mit", port: int = 6006,
                   python_version: Optional[str] = None, tensorboard_version: Optional[str] = None,
                   from_color: Optional[ColorTyping] = None, to_color: Optional[ColorTyping] = None):
+    """
+    Overview:
+        Creating a project to launch TensorBoard, and upload it to the HuggingFace space.
+
+    :param repository: The Hugging Face space repository to initialize.
+    :param title: The title of the TensorBoard space. Defaults to ``None``,
+        which means capitalized form of repository's name will be used.
+    :param emoji: The emoji for the TensorBoard space. Defaults to ``None``,
+        which means random emoji logo will be used.
+    :param private: Create private space or not. Defaults to ``False``.
+    :param licence: The license for the TensorBoard space. Defaults to ``mit``.
+    :param port: The port number to run the TensorBoard server. Defaults to ``6006``.
+    :param python_version: The Python version used for the environment. Defaults to ``None``,
+        which means current python version will be used.
+    :param tensorboard_version: The version of TensorBoard to use. Defaults to ``None``,
+        which means no limitation for tensorboard's version.
+    :param from_color: The starting color of the space. Defaults to ``None``,
+        which means random starting color will be used.
+    :param to_color: The ending color of the space. Defaults to ``None``,
+        which means random ending color will be used.
+    """
     with TemporaryDirectory() as td:
         init_tb_space_to_local(repository, td, title, emoji, licence, port,
                                python_version, tensorboard_version, from_color, to_color)
