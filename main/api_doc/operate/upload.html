@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tbsync.config.meta &mdash; tbsync 0.0.1 documentation</title>
+  <title>tbsync.operate.upload &mdash; tbsync 0.0.1 documentation</title>
   
 
   
@@ -39,8 +39,8 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="tbsync.operate" href="../operate/index.html" />
-    <link rel="prev" title="tbsync.config" href="index.html" /> 
+    <link rel="next" title="tbsync.utils" href="../utils/index.html" />
+    <link rel="prev" title="tbsync.operate.init" href="init.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,18 +95,15 @@
 </ul>
 <p><span class="caption-text">API Documentation</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">tbsync.config</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">tbsync.config.meta</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#title">__TITLE__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#version">__VERSION__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#description">__DESCRIPTION__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#author">__AUTHOR__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#author-email">__AUTHOR_EMAIL__</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config/index.html">tbsync.config</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">tbsync.operate</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="init.html">tbsync.operate.init</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">tbsync.operate.upload</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#upload-log-directory">upload_log_directory</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../operate/index.html">tbsync.operate</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../utils/index.html">tbsync.utils</a></li>
 </ul>
 
@@ -153,15 +150,15 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">tbsync.config</a> &raquo;</li>
+          <li><a href="index.html">tbsync.operate</a> &raquo;</li>
         
-      <li>tbsync.config.meta</li>
+      <li>tbsync.operate.upload</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/api_doc/config/meta.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/api_doc/operate/upload.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,54 +173,31 @@
             
     
     
-  <section id="module-tbsync.config.meta">
-<span id="tbsync-config-meta"></span><h1>tbsync.config.meta<a class="headerlink" href="#module-tbsync.config.meta" title="Permalink to this headline">¶</a></h1>
-<dl class="simple">
-<dt>Overview:</dt><dd><p>Meta information for tbsync package.</p>
+  <section id="module-tbsync.operate.upload">
+<span id="tbsync-operate-upload"></span><h1>tbsync.operate.upload<a class="headerlink" href="#module-tbsync.operate.upload" title="Permalink to this headline">¶</a></h1>
+<section id="upload-log-directory">
+<h2>upload_log_directory<a class="headerlink" href="#upload-log-directory" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tbsync.operate.upload.upload_log_directory">
+<code class="sig-prename descclassname">tbsync.operate.upload.</code><code class="sig-name descname">upload_log_directory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">repository</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">logdir</span></em>, <em class="sig-param"><span class="n">name</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">anonymous</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/tbsync/operate/upload.html#upload_log_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tbsync.operate.upload.upload_log_directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Overview:</dt><dd><p>Uploads a local TensorBoard log directory to the specified Hugging Face space repository
+for easy access and viewing.</p>
 </dd>
 </dl>
-<section id="title">
-<h2>__TITLE__<a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h2>
-<dl class="py data">
-<dt id="tbsync.config.meta.__TITLE__">
-<code class="sig-prename descclassname">tbsync.config.meta.</code><code class="sig-name descname">__TITLE__</code><a class="headerlink" href="#tbsync.config.meta.__TITLE__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Title of this project (should be <cite>tbsync</cite>).</p>
-</dd></dl>
-
-</section>
-<section id="version">
-<h2>__VERSION__<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h2>
-<dl class="py data">
-<dt id="tbsync.config.meta.__VERSION__">
-<code class="sig-prename descclassname">tbsync.config.meta.</code><code class="sig-name descname">__VERSION__</code><a class="headerlink" href="#tbsync.config.meta.__VERSION__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Version of this project.</p>
-</dd></dl>
-
-</section>
-<section id="description">
-<h2>__DESCRIPTION__<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<dl class="py data">
-<dt id="tbsync.config.meta.__DESCRIPTION__">
-<code class="sig-prename descclassname">tbsync.config.meta.</code><code class="sig-name descname">__DESCRIPTION__</code><a class="headerlink" href="#tbsync.config.meta.__DESCRIPTION__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Short description of the project, will be included in <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>.</p>
-</dd></dl>
-
-</section>
-<section id="author">
-<h2>__AUTHOR__<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h2>
-<dl class="py data">
-<dt id="tbsync.config.meta.__AUTHOR__">
-<code class="sig-prename descclassname">tbsync.config.meta.</code><code class="sig-name descname">__AUTHOR__</code><a class="headerlink" href="#tbsync.config.meta.__AUTHOR__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Author of this project.</p>
-</dd></dl>
-
-</section>
-<section id="author-email">
-<h2>__AUTHOR_EMAIL__<a class="headerlink" href="#author-email" title="Permalink to this headline">¶</a></h2>
-<dl class="py data">
-<dt id="tbsync.config.meta.__AUTHOR_EMAIL__">
-<code class="sig-prename descclassname">tbsync.config.meta.</code><code class="sig-name descname">__AUTHOR_EMAIL__</code><a class="headerlink" href="#tbsync.config.meta.__AUTHOR_EMAIL__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Email of the authors’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>repository</strong> – The Hugging Face space repository to upload the log directory to.</p></li>
+<li><p><strong>logdir</strong> – The path to the local TensorBoard log directory.</p></li>
+<li><p><strong>name</strong> – The name for the uploaded log directory. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+which means directory name of <code class="docutils literal notranslate"><span class="pre">logdir</span></code> will be used as name.</p></li>
+<li><p><strong>anonymous</strong> – Indicates whether the upload should be anonymous or not. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.
+When this option is enabled, the part of the log file name that contains information about
+the local machine will be encrypted, ensuring that the local runtime environment information is not exposed.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -238,10 +212,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../operate/index.html" class="btn btn-neutral float-right" title="tbsync.operate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../utils/index.html" class="btn btn-neutral float-right" title="tbsync.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral float-left" title="tbsync.config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="init.html" class="btn btn-neutral float-left" title="tbsync.operate.init" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -274,7 +248,7 @@
         <div class="rst-other-versions">
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="meta.html">main</a></dd>
+                        <dd><a href="upload.html">main</a></dd>
                 </dl>
         </div>
     </div>
